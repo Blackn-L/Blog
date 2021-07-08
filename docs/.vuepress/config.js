@@ -2,6 +2,9 @@ module.exports = {
     title: "Blackn's Blog",
     description: 'Just playing around',
     themeConfig: {
+        repo: 'https://github.com/Blackn-L/Blackn-L.github.io',
+        repoLabel: 'GitHub',
+        base: '/Blackn-L.github.io/',
         displayAllHeaders: true,
         lastUpdated: 'Last Updated',
         smoothScroll: true,
