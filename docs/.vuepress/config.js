@@ -1,6 +1,5 @@
 module.exports = {
     title: "Blackn's Blog",
-    base: '/Blackn-L.github.io/',
     description: 'Just playing around',
     themeConfig: {
         repo: 'https://github.com/Blackn-L/Blackn-L.github.io',
