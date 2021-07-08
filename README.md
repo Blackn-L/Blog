@@ -1,3 +1,4 @@
 ```javascript
-run 
+npm run dev
+npm run build
 ```
