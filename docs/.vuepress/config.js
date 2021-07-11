@@ -30,6 +30,12 @@ module.exports = {
                     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
                 },
                 {
+                    title: 'Browser',
+                    path: '/blog/browser/',
+                    children: [],
+                    initialOpenGroupIndex: -1 // 可选的, 默认值是 0
+                }
+                {
                     title: 'Other',
                     path: '/blog/other/',
                     children: [],
