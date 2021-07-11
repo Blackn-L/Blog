@@ -1,4 +1,4 @@
-```javascript
-npm run dev
-npm run build
+```shell
+./depoly.sh
+更新到Page
 ```
