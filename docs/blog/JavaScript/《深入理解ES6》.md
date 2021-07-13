@@ -1,0 +1,315 @@
+# 《深入理解ES6》
+
+## 1、块级作用域
+
+### 前言
+
+> 引入原因：var存在变量提升
+>
+> 作用：强化对变量生命周期的控制
+
+由于 JS 存在变量提升，比较容易误解，在 ES6 中引入了块级作用域
+
+### 变量提升
+
+先看下什么是变量提升：
+
+变量的声明会被提升到**函数顶部**，而变量的赋值会在原处执行，所以可以先访问到该变量，其值为 `undefined`
+
+**注意是函数顶部**
+
+```javascript
+// 例1
+console.log(myName) // undefined
+var myName = 'Blackn'
+
+// 相当于
+var myName
+console.log(myName)
+myName = 'Blackn'
+```
+
+
+
+```javascript
+// 例2
+function sayHello(say){
+    console.log(sayValue + '1') // undefined1
+    if(say){
+        var sayValue = 'Blackn'
+        console.log(sayValue) // Blackn
+    } else {
+        console.log(sayValue + '3') // undefined3
+    }
+}
+sayHello(true)
+
+// 相当于
+function sayHello(say){
+    var sayValue
+    console.log(sayValue + '1')
+    if(say){
+        sayValue = 'Blackn'
+        console.log(sayValue)
+    } else {
+        console.log(sayValue + '3')
+    }
+}
+```
+
+### 块级声明（let、const）
+
+块级作用域（词法作用域），存在于
+
+* 函数内部
+* 块中（` { } `内）
+
+块之外无法访问块内声明的变量
+
+#### let
+
+let 与 var 用法类似，但是有 4 个主要区别
+
+**1、不存在变量提升**
+
+还是上面两个例子
+
+```javascript
+// 例1
+console.log(myName) // myName is no defined，报错
+let myName = 'Blackn'
+
+// 例2，let声明的只在当前作用域有效，即函数体内，或者更小一层，在{}内，这里是在if内
+function sayHello(say){
+    console.log(sayValue + '1') // sayValue is not defined
+    if(say){
+        var sayValue = 'Blackn'
+        console.log(sayValue) // Blackn
+    } else {
+        console.log(sayValue + '3') // sayValue is not defined
+    }
+}
+sayHello(true)
+```
+
+例 2 中第一个 log 直接就报错，函数不会再往下执行，往下的两个打印是为了更好的理解
+
+
+
+**2、变量只在当前声明的作用域内生效**
+
+```javascript
+// 例1
+if(true){
+    let myName = 'Blackn'
+    console.log(myName + '1') // Blackn1
+}
+console.log(myName + '2') // myName is not defined
+
+// 例2
+if(true){
+    let myName = 'Blackn'
+    if(true){
+        console.log(myName) // Blackn
+    }
+}
+
+// 例3
+for (var i = 0; i < 5; i ++) {}
+console.log(i) // 5
+
+for (let i = 0; i< 5; i++ ) {}
+console.log(i) // i is not defined
+// for循环的 {} 里面也是一个块级作用域
+```
+
+注意看例 2 ，if 里面又套了个 if ，但是里面的 if 的作用域还是在外面的 if 的作用域里面，所以变量依旧生效
+
+
+
+**3、同一作用域内无法重复声明**
+
+``` javascript
+function get() {
+    var myName = 'Blackn'
+    var myName = 'Jack'
+} // 正常运行
+
+function say() {
+    let myName = 'Blackn'
+    let myName = 'Jack'
+} // 报错
+```
+
+同一作用域内无法重复声明，如果在上面的 `say` 函数外面声明 `myName` 就没有问题，或者在里面来个 `if` 判断，在判断内声明也没问题 
+
+
+
+**4、暂时性死区**
+
+JS 引擎在扫描代码发现**变量声明**时，只有两种情况
+
+* 遇到 **var** 声明，将声明提升到作用域顶部
+* 遇到 **let、const**，将声明放到 **TDZ** （暂时性死区 temporal dead zone）中，访问 TDZ 中的变量会报错
+
+执行过变量声明语句后，变量才会从 TDZ 中移除
+
+```javascript
+if(true) {
+    console.log(typeof sayValue) // 报错，此时sayValue在暂时性死区内，访问会报错
+    let sayValue = 'Blackn'
+}
+
+
+console.log(typeof sayValue) // undefined，此时sayValue是在声明它的块级作用域外，所以不在暂时性死区内
+if(true) {
+    let sayValue = 'Blackn'
+}
+```
+
+
+
+#### const
+
+const 用来声明常量，值一旦被设定则无法再被更改，声明时必须赋值
+
+其他的都与 let 相同
+
+
+
+需要注意的一个点是，如果 const 声明的是一个对象，可以修改对象的属性
+
+``` javascript
+const age = 21
+age = 22 // Assignment to constant variable，报错
+
+const person = {
+    age: 21
+}
+person.age = 22
+person.name = 'Blackn'
+console.log(person) //  {age: 22, name: "Blackn"}
+person = {} // 报错
+```
+
+const声明不允许修改绑定，但允许修改值，在声明对象后，可以修改该对象的属性值
+
+
+
+### 总结
+
+对比下 var、let、const的不同
+
+* var：存在变量提升，无块级作用域，同一变量名可重复声明
+* let：不存在变量提升，存在暂时性死区，有块级作用域，不可重复声明
+* const：不存在变量提升，存在暂时性死区，有块级作用域，不可重复声明，声明时值必须赋值，且不能再次赋值（可以修改绑定的值，如对象的属性值）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 拓展1：JS的函数作用域和块级作用域
+
+在 JS 中我们经常能听到两种作用域，`函数作用域`和`块级作用域` 
+
+* 函数作用域是在 ES6 之前就有的，函数内声明的变量只能在该函数内被访问到（ps：函数A里面有个函数B，那也是在函数A里面）
+
+* 块级作用域是 ES6 的新特性，配合 let 和 const，只在`函数作用域`或者`花括号 {} `内生效，也叫`词法作用域`
+
+**有函数作用域肯定有块级作用域，但是有块级作用域不一定有函数作用域，因为也可能是花括号 {} 生成的**
+
+
+
+这两个作用域经常和我们的三个关键词一起出现，`var` 、`let`、`const`
+
+`var` 声明的变量不会生成块级作用域
+
+`let`、`const`声明的变量会生成块级作用域
+
+
+
+### 函数作用域
+
+先看看函数作用域
+
+```javascript
+function sayHello() {
+    var sayValue = 'Hello World'
+    console.log(sayValue + '1') // Hello World1
+    function justSayHello() {
+        console.log(sayValue + '2') // Hello World2
+    }
+    justSayHello()
+}
+sayHello()
+console.log(sayVaule + '3') // sayVaule is not defined
+```
+
+在函数体内（花括号内）声明的变量无法在外面被访问到（3）
+
+### 块级作用域（词法作用域）
+
+再看看块级作用域（词法作用域）
+
+块级作用域存在于两个地方：
+
+* 函数作用域
+* 花括号 {} 内
+
+函数作用域刚刚说过了，在函数体内声明的变量无法被外层访问到
+
+来看下`花括号 {}`
+
+**if、for循环、while循环等语句中，花括号区域就是块级作用域，但是变量必须使用`let`、`const`声明，不然无法形成块级作用域**
+
+
+
+``` javascript
+// 使用 var 声明
+if(true) {
+    var sayValue = 'Hello var'
+}
+console.log(sayValue) // Hello var， 没有形成块级作用域
+
+// 使用 let、const声明
+if(true) {
+    let sayValue = 'Hello let'
+}
+console.log(sayValue) // sayValue is not defined，形成块级作用域
+```
+
+
+
+### 总结
+
+所以，区分函数作用域和块级作用域很简单，看变量用什么声明的：
+
+* var 声明的，该变量所处作用域就为函数作用域
+* let、const 声明的，处于块级作用域，即：函数体内、花括号 {} 内声明的变量都不能被外部访问
+

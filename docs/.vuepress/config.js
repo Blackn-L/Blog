@@ -6,7 +6,7 @@ module.exports = {
         repoLabel: 'GitHub',
         displayAllHeaders: true,
         lastUpdated: 'Last Updated',
-        dest:'public',
+        dest: 'public',
         smoothScroll: true,
         sidebarDepth: 2,
         nav: [
@@ -17,30 +17,36 @@ module.exports = {
         sidebar: {
             '/blog/': [
                 {
-                    title: 'Vue',
-                    path: '/blog/vue/',
-                    children: ['/blog/vue/20210708'],
-                    initialOpenGroupIndex: -1 // 可选的, 默认值是 0
-                }
-                ,
-                {
-                    title: 'React',
-                    path: '/blog/react/',
-                    children: [],
+                    title: 'JavaScript',
+                    path: '/blog/JavaScript/',
+                    children: ['/blog/JavaScript/《深入理解ES6》'],
                     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
                 },
-                {
-                    title: 'Browser',
-                    path: '/blog/browser/',
-                    children: [],
-                    initialOpenGroupIndex: -1 // 可选的, 默认值是 0
-                },
-                {
-                    title: 'Other',
-                    path: '/blog/other/',
-                    children: [],
-                    initialOpenGroupIndex: -1 // 可选的, 默认值是 0
-                }
+                // {
+                //     title: 'Vue',
+                //     path: '/blog/vue/',
+                //     children: ['/blog/vue/20210708'],
+                //     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
+                // }
+                // ,
+                // {
+                //     title: 'React',
+                //     path: '/blog/react/',
+                //     children: [],
+                //     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
+                // },
+                // {
+                //     title: 'Browser',
+                //     path: '/blog/browser/',
+                //     children: [],
+                //     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
+                // },
+                // {
+                //     title: 'Other',
+                //     path: '/blog/other/',
+                //     children: [],
+                //     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
+                // }
             ],
             '/resources/': [
                 {
