@@ -19,7 +19,20 @@ module.exports = {
                 {
                     title: 'JavaScript',
                     path: '/blog/JavaScript/',
-                    children: ['/blog/JavaScript/《深入理解ES6》'],
+                    children: [
+                        {
+                            title: '《深入理解ES6》',
+                            path: '/blog/JavaScript/《深入理解ES6》',
+                            children: [
+                                {
+                                    title: '1、块级作用域',
+                                    path: '/blog/JavaScript/《深入理解ES6》/1、块级作用域',
+                                    initialOpenGroupIndex: -1
+                                }
+                            ],
+                            initialOpenGroupIndex: -1
+                        }
+                    ],
                     initialOpenGroupIndex: -1 // 可选的, 默认值是 0
                 },
                 // {
