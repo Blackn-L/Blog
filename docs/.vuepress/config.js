@@ -28,6 +28,11 @@ module.exports = {
                                     title: '1、块级作用域',
                                     path: '/blog/JavaScript/《深入理解ES6》/1、块级作用域',
                                     initialOpenGroupIndex: -1
+                                },
+                                {
+                                    title: '拓展1、JS的函数作用域和块级作用域',
+                                    path: '/blog/JavaScript/《深入理解ES6》/拓展1、JS的函数作用域和块级作用域',
+                                    initialOpenGroupIndex: -1
                                 }
                             ],
                             initialOpenGroupIndex: -1
